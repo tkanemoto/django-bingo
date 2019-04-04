@@ -8,9 +8,9 @@ from . import times
 from .times import is_starttime
 
 
-SALT = getattr(settings, "SALT", "hackme")
-GAME_START_TIMES = getattr(settings, "GAME_START_TIMES", None)
-GAME_WEEK_DAYS = getattr(settings, "GAME_WEEK_DAYS", None)
+SALT = getattr(settings, "BINGO_SALT", "hackme")
+GAME_START_TIMES = getattr(settings, "BINGO_GAME_START_TIMES", None)
+GAME_WEEK_DAYS = getattr(settings, "BINGO_GAME_WEEK_DAYS", None)
 
 GAME_START_DISABLED = getattr(
     settings, "GAME_START_DISABLED", False)

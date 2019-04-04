@@ -17,22 +17,42 @@ from .times import is_starttime, is_after_endtime, get_endtime
 
 
 # Color ranges
-COLOR_FROM = getattr(settings, "COLOR_FROM", 80)
-COLOR_TO = getattr(settings, "COLOR_TO", 160)
+COLORS = [
+    '#3EB650',
+    '#FCC133',
+    '#FB8122',
+    '#3CBCC3',
+    '#438945',
+    '#2CCCC3',
+    '#0F2557',
+    '#28559A',
+    '#3778C2',
+    '#4B9FE1',
+    '#63BCE5',
+    '#7ED5EA',
+    '#5BB659',
+    '#254598',
+    '#632695',
+    '#4AC6D2',
+    '#5DAA68',
+    '#3F6844',
+    '#182978',
+    '#6688CC',
+]
 
 # Expire game after hard-timeout seconds, or
 # soft-timeout seconds inactivity, whatever comes first.
-GAME_SOFT_TIMEOUT = getattr(settings, "GAME_SOFT_TIMEOUT", 60)
-GAME_HARD_TIMEOUT = getattr(settings, "GAME_HARD_TIMEOUT", 120)
+GAME_SOFT_TIMEOUT = getattr(settings, "BINGO_GAME_SOFT_TIMEOUT", 60)
+GAME_HARD_TIMEOUT = getattr(settings, "BINGO_GAME_HARD_TIMEOUT", 120)
 
 BINGO_IMAGE_DATETIME_FORMAT = getattr(
     settings, "BINGO_IMAGE_DATETIME_FORMAT", "%Y-%m-%d %H:%M")
 
 # if a user did not vote/refresh his board for this time,
 # he is counted as inactive
-USER_ACTIVE_TIMEOUT = getattr(settings, "USER_ACTIVE_TIMEOUT", 5)
+USER_ACTIVE_TIMEOUT = getattr(settings, "BINGO_USER_ACTIVE_TIMEOUT", 5)
 
-THUMBNAILS_ENABLED = getattr(settings, "THUMBNAILS_ENABLED", True)
+THUMBNAILS_ENABLED = getattr(settings, "BINGO_THUMBNAILS_ENABLED", True)
 
 WORD_TYPE_TOPIC = 1
 WORD_TYPE_MIDDLE = 2
@@ -298,10 +318,7 @@ class BingoBoard(models.Model):
                         _(u"game and ip must be unique_together"))
 
             # generate a color
-            self.color = "#%x%x%x" % (
-                randint(COLOR_FROM, COLOR_TO),
-                randint(COLOR_FROM, COLOR_TO),
-                randint(COLOR_FROM, COLOR_TO))
+            self.color = COLORS[randint(0, len(COLORS))]
 
             # first create the fields, so the board will
             # not be saved, when field creation fails

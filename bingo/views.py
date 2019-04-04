@@ -19,25 +19,25 @@ from . import times
 import logging
 logger = logging.getLogger(__name__)
 
-GAME_START_DISABLED = getattr(settings, "GAME_START_DISABLED", False)
+GAME_START_DISABLED = getattr(settings, "BINGO_GAME_START_DISABLED", False)
 THUMBNAIL_CACHE_EXPIRY = getattr(
     settings,
-    "THUMBNAIL_CACHE_EXPIRY",
+    "BINGO_THUMBNAIL_CACHE_EXPIRY",
     5 * 60)
 OLD_THUMBNAIL_CACHE_EXPIRY = getattr(
     settings,
-    "OLD_THUMBNAIL_CACHE_EXPIRY",
+    "BINGO_OLD_THUMBNAIL_CACHE_EXPIRY",
     24 * 60 * 60)
-USE_SSE = hasattr(settings, "SSE_URL")
+USE_SSE = hasattr(settings, "BINGO_SSE_URL")
 TWEETBUTTON_TEXT = getattr(
-    settings, "TWEETBUTTON_TEXT",
+    settings, "BINGO_TWEETBUTTON_TEXT",
     pgettext_lazy("tweet text", "My bingo board:"))
-TWEETBUTTON_HASHTAGS = getattr(settings, "TWEETBUTTON_HASHTAGS", "bingo")
-TWITTERCARD_ACCOUNT = getattr(settings, "TWITTERCARD_ACCOUNT", "")
+TWEETBUTTON_HASHTAGS = getattr(settings, "BINGO_TWEETBUTTON_HASHTAGS", "bingo")
+TWITTERCARD_ACCOUNT = getattr(settings, "BINGO_TWITTERCARD_ACCOUNT", "")
 
 if USE_SSE:
-    REDIS_HOST = getattr(settings, "REDIS_HOST", None)
-    REDIS_PORT = getattr(settings, "REDIS_PORT", None)
+    REDIS_HOST = getattr(settings, "BINGO_REDIS_HOST", None)
+    REDIS_PORT = getattr(settings, "BINGO_REDIS_PORT", None)
     try:
         from redis import Redis, ConnectionError as RedisConnectionError
         kwargs = {}

@@ -6,16 +6,16 @@ from datetime import datetime
 
 # Time range, in which a game can be started. None = no limit
 # or a ((Hour, Minute), (Hour, Minute)) tuple defining the range.
-GAME_START_TIMES = getattr(settings, "GAME_START_TIMES", None)
+GAME_START_TIMES = getattr(settings, "BINGO_GAME_START_TIMES", None)
 
 # Time, after which a running game is ended. Has only effect, if
 # GAME_START_TIMES is set, and needs to be outside of GAME_START_TIMES.
 # Values: tuple (hour, minute) or None for no restriction
-GAME_END_TIME = getattr(settings, "GAME_END_TIME", None)
+GAME_END_TIME = getattr(settings, "BINGO_GAME_END_TIME", None)
 
 # Time, after which voting is possible.
 # Needs to come after the start time start.
-VOTE_START_TIME = getattr(settings, "VOTE_START_TIME", None)
+VOTE_START_TIME = getattr(settings, "BINGO_VOTE_START_TIME", None)
 
 
 def now():

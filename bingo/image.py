@@ -15,31 +15,31 @@ from .models import Word, BingoField
 COLOR_MODE_BLANK, COLOR_MODE_MARKED, COLOR_MODE_VOTED = range(3)
 
 # settings
-H_BOX_PADDING = getattr(settings, "HORIZONTAL_PADDING", 8)
-V_BOX_PADDING = getattr(settings, "VERTICAL_PADDING", 30)
-H_LINE_MARGIN = getattr(settings, "HORIZONTAL_LINE_MARGIN", 0)
-V_LINE_MARGIN = getattr(settings, "VERTICAL_LINE_MARGIN", 5)
-BORDER = getattr(settings, "BORDER", 1)
+H_BOX_PADDING = getattr(settings, "BINGO_HORIZONTAL_PADDING", 4)
+V_BOX_PADDING = getattr(settings, "BINGO_VERTICAL_PADDING", 110)
+H_LINE_MARGIN = getattr(settings, "BINGO_HORIZONTAL_LINE_MARGIN", 5)
+V_LINE_MARGIN = getattr(settings, "BINGO_VERTICAL_LINE_MARGIN", 5)
+BORDER = getattr(settings, "BINGO_BORDER", 1)
 
-FONTPATH = getattr(settings, "FONT_PATH", "/path/to/font.ttf")
-FONTSIZE = getattr(settings, "FONT_SIZE", 16)
+FONTPATH = getattr(settings, "BINGO_FONT_PATH", "/path/to/font.ttf")
+FONTSIZE = getattr(settings, "BINGO_FONT_SIZE", 16)
 
-NEUTRAL_FIELD_COLOR = getattr(settings, "NEUTRAL_FIELD_COLOR", (255, 255, 255))
-NEUTRAL_WORD_COLOR = getattr(settings, "NEUTRAL_WORD_COLOR", (0, 0, 0))
-MIDDLE_FIELD_COLOR = getattr(settings, "MIDDLE_FIELD_COLOR", (90, 90, 90))
-MIDDLE_WORD_COLOR = getattr(settings, "MIDDLE_WORD_COLOR", (255, 255, 255))
+NEUTRAL_FIELD_COLOR = getattr(settings, "BINGO_NEUTRAL_FIELD_COLOR", (255, 255, 255))
+NEUTRAL_WORD_COLOR = getattr(settings, "BINGO_NEUTRAL_WORD_COLOR", (0, 0, 0))
+MIDDLE_FIELD_COLOR = getattr(settings, "BINGO_MIDDLE_FIELD_COLOR", (90, 90, 90))
+MIDDLE_WORD_COLOR = getattr(settings, "BINGO_MIDDLE_WORD_COLOR", (255, 255, 255))
 # MARKED_FIELD_COLOR is stored in the BingoBoard model
-MARKED_WORD_COLOR = getattr(settings, "MARKED_WORD_COLOR", (0, 0, 0))
+MARKED_WORD_COLOR = getattr(settings, "BINGO_MARKED_WORD_COLOR", (0, 0, 0))
 # VOTED_FIELD_COLOR is stored in the BingoBoard model
-VOTED_WORD_COLOR = getattr(settings, "VOTED_WORD_COLOR", (0, 0, 0))
-VETO_FIELD_COLOR = getattr(settings, "VETO_FIELD_COLOR", (255, 255, 255))
-VETO_WORD_COLOR = getattr(settings, "VETO_WORD_COLOR", (255, 0, 0))
+VOTED_WORD_COLOR = getattr(settings, "BINGO_VOTED_WORD_COLOR", (0, 0, 0))
+VETO_FIELD_COLOR = getattr(settings, "BINGO_VETO_FIELD_COLOR", (255, 255, 255))
+VETO_WORD_COLOR = getattr(settings, "BINGO_VETO_WORD_COLOR", (255, 0, 0))
 
 BINGO_IMAGE_DATETIME_FORMAT = getattr(
     settings, "BINGO_IMAGE_DATETIME_FORMAT", "%Y-%m-%d %H:%M")
 
-THUMBNAIL_WIDTH = getattr(settings, "THUMBNAIL_WIDTH", 300)
-THUMBNAIL_HEIGHT = getattr(settings, "THUMBNAIL_HEIGHT", 80)
+THUMBNAIL_WIDTH = getattr(settings, "BINGO_THUMBNAIL_WIDTH", 80)
+THUMBNAIL_HEIGHT = getattr(settings, "BINGO_THUMBNAIL_HEIGHT", 80)
 
 
 class Text(object):
