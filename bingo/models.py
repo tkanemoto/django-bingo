@@ -13,7 +13,7 @@ from colorful.fields import RGBColorField
 
 from random import randint
 
-from times import is_starttime, is_after_endtime, get_endtime
+from .times import is_starttime, is_after_endtime, get_endtime
 
 
 # Color ranges
@@ -335,7 +335,7 @@ class BingoBoard(models.Model):
         count = 0
         words, middle = _get_random_words(site=self.game.site)
         fields = []
-        for i in xrange(25):
+        for i in range(25):
             # 13th field = middle
             if i == 12:
                 fields.append(BingoField(word=middle, position=i+1))

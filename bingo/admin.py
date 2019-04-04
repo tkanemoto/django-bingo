@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db import models
 from django import forms
 
-from models import *
+from .models import *
 
 
 def bingoboard_user(bingo_board):
@@ -19,7 +19,7 @@ def word_sites(word):
         @returns: the sites, where a Word instance is active,
         truncated, so at most 5 sites are displayed
     """
-    sites = map(lambda site: site.domain, word.site.all()[:5])
+    sites = list(map(lambda site: site.domain, word.site.all()[:5]))
     return ", ".join(sites if len(sites) <= 5 else sites+["[...]"])
 
 

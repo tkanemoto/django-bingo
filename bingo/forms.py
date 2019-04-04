@@ -3,9 +3,9 @@ from django.utils.translation import pgettext, ugettext as _
 from django.conf import settings
 from django.contrib.auth.hashers import get_hasher
 
-from models import BingoBoard, is_starttime
-import times
-from times import is_starttime
+from .models import BingoBoard, is_starttime
+from . import times
+from .times import is_starttime
 
 
 SALT = getattr(settings, "SALT", "hackme")
@@ -39,7 +39,7 @@ class CreateForm(forms.Form):
 
     def clean_password(self):
         if self.cleaned_data['password']:
-            hasher = get_hasher(algorithm='sha1')
+            hasher = get_hasher(algorithm='pbkdf2_sha256')
             hashed_password = hasher.encode(
                 self.cleaned_data['password'], SALT)
             return hashed_password
@@ -82,7 +82,7 @@ class ReclaimForm(forms.Form):
         super(ReclaimForm, self).__init__(data=data, *args, **kwargs)
 
     def clean_password(self):
-        hasher = get_hasher(algorithm='sha1')
+        hasher = get_hasher(algorithm='pbkdf2_sha256')
         hashed_password = hasher.encode(self.cleaned_data['password'],
                                         SALT)
         if not self.game or self.game.is_expired():
@@ -114,7 +114,7 @@ class ClaimForm(forms.Form):
         super(ClaimForm, self).__init__(data=data, *args, **kwargs)
 
     def clean_password(self):
-        hasher = get_hasher(algorithm='sha1')
+        hasher = get_hasher(algorithm='pbkdf2_sha256')
         hashed_password = hasher.encode(self.cleaned_data['password'],
                                         SALT)
 
@@ -147,4 +147,4 @@ class ChangeThemeForm(forms.Form):
 
 class RateGameForm(forms.Form):
     rating = forms.ChoiceField(
-        choices=zip(["None"] + range(1, 6), [_("n/a")] + range(1, 6)))
+        choices=zip(["None"] + list(range(1, 6)), [_("n/a")] + list(range(1, 6))))
