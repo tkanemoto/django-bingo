@@ -2,7 +2,7 @@ from django.db.models import Count, Max
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 import views
 import math
 

@@ -7,7 +7,7 @@ from django.db import models, transaction
 from django.db.models import Count, Sum
 from django.contrib.sites.models import Site
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from colorful.fields import RGBColorField
 
@@ -104,7 +104,7 @@ def get_game(site, description="", create=False):
 class Game(models.Model):
     game_id = models.IntegerField(blank=True, null=True)
     description = models.CharField(max_length=255, blank=True)
-    site = models.ForeignKey(Site)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     last_used = models.DateTimeField(auto_now_add=True)
 
@@ -246,10 +246,10 @@ RATINGS = (
 
 class BingoBoard(models.Model):
     board_id = models.IntegerField(blank=True, null=True)
-    game = models.ForeignKey("Game")
+    game = models.ForeignKey("Game", on_delete=models.CASCADE)
     color = RGBColorField()
     ip = models.GenericIPAddressField(blank=True, null=True)
-    user = models.ForeignKey(User, blank=True, null=True)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     password = models.CharField(max_length=255, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     last_used = models.DateTimeField(auto_now_add=True)
@@ -392,8 +392,8 @@ def position_validator(value):
 
 
 class BingoField(models.Model):
-    word = models.ForeignKey("Word")
-    board = models.ForeignKey("BingoBoard")
+    word = models.ForeignKey("Word", on_delete=models.CASCADE)
+    board = models.ForeignKey("BingoBoard", on_delete=models.CASCADE)
     position = models.SmallIntegerField(
         validators=[position_validator],
         blank=True, null=True, default=None)

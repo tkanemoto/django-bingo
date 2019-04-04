@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import ugettext as _, pgettext_lazy
 from django.db import transaction
@@ -56,7 +56,7 @@ def _get_user_bingo_board(request):
     bingo_board = None
     game = get_game(site=get_current_site(request), create=False)
     session_board_id = request.session.get('board_id', None)
-    user = request.user if request.user.is_authenticated() else None
+    user = request.user if request.user.is_authenticated else None
     ip = request.META['REMOTE_ADDR']
 
     # try the board_id in the session
@@ -242,7 +242,7 @@ def create_board(request):
                 # if the user is logged in, associate the board with
                 # the user, and ignore the password
                 # (so no other user can claim the board)
-                user = user if user.is_authenticated() else None
+                user = user if user.is_authenticated else None
                 if user:
                     password = None
 
