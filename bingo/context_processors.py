@@ -6,40 +6,28 @@ from django.contrib.sites.shortcuts import get_current_site
 static_url = staticfiles_storage.url
 
 
-DEFAULT_THEMES = (
-    ('Dark', 'bingo/themes/dark.css'),
-)
+DEFAULT_THEMES = ['Light', 'Dark']
 
 
 def themes(request):
-    STATIC_ROOT = getattr(settings, "STATIC_ROOT", "")
 
     site_theme = getattr(settings, "BINGO_THEME", "")
-    if site_theme != '' and not site_theme.startswith("http://") \
-            and not site_theme.startswith("https://"):
-        site_theme = static_url(site_theme)
+    site_theme_url = static_url('bingo/themes/{}.css'.format(site_theme.lower()))
 
     themes = list(getattr(settings, "BINGO_THEMES", DEFAULT_THEMES))
-    if len(themes) > 0:
-        themes = [(_("Default"), "")] + list(themes)
-        for i in xrange(len(themes)):
-            theme_name, theme_url = themes[i]
-            if theme_url != '' and not theme_url.startswith("http://") \
-                    and not theme_url.startswith("https://"):
-                themes[i] = (theme_name, static_url(theme_url))
-    else:
         # if there is no theme list, the user cannot
         # reset the theme, so we remove it from session
         # and use the default one.
-        if 'theme' in request.session:
-            del request.session['theme']
 
     user_theme = request.session.get('theme', '')
+    user_theme_url = static_url('bingo/themes/{}.css'.format(user_theme.lower()))
 
     return {
         'site_theme': site_theme,
+        'site_theme_url': site_theme_url,
         'themes': themes,
         'user_theme': user_theme,
+        'user_theme_url': user_theme_url,
     }
 
 

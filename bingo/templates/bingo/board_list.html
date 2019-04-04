@@ -1,4 +1,40 @@
 {% load i18n %}
+
+<ul class="list-unstyled">
+    {% if my_board %}{% with board=my_board %}
+        <li class="media my-4">
+            <div class="thumbnail mr-3">
+                <a href="{% url 'bingo-bingo' board.board_id %}">
+                    <img class="thumbnail" src="{% url 'bingo-thumbnail' board_id=board.board_id voted=True %}" alt="[Thumbnail: {% trans 'Board' %} #{{ board.board_id }}]" title="{{ board.created }}" />
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="mt-0">
+                    <a href="{% url 'bingo-bingo' board.board_id %}">{% trans 'Board' %} #{{ board.board_id }}</a>
+                </h4>
+                <small class="badge badge-success">{% trans 'Your board' %}</small>
+                {{ board.get_middle_field.word.word }}
+            </div>
+        </li>
+    {% endwith %}{% endif %}
+    {% for board in boards %}
+        {% if not my_board or my_board != board %}
+        <li class="media my-4">
+            <div class="thumbnail mr-3">
+                <a href="{% url 'bingo-bingo' board.board_id %}">
+                    <img class="thumbnail" src="{% url 'bingo-thumbnail' board_id=board.board_id voted=True %}" alt="[Thumbnail: {% trans 'Board' %} #{{ board.board_id }}]" title="{{ board.created }}" />
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="mt-0"><a href="{% url 'bingo-bingo' board.board_id %}">{% trans 'Board' %} #{{ board.board_id }}</a></h4>
+                {{ board.get_middle_field.word.word }}
+            </div>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<!--
 <ul class="board_list">
 {% if total_boards and game.is_expired %}{# total_boards is only set on the overview page #}
 <li>
@@ -42,3 +78,4 @@
 </a></li>
 {% endif %}
 </ul>
+-->

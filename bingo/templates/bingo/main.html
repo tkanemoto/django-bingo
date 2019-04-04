@@ -3,96 +3,74 @@
 {% load staticfiles %}
 
 {% block title %}{% trans 'Startpage' %}{% endblock %}
-{% block extra_head %}
-    {{ block.super }}
-    <script src="{% static 'bingo/js/board_list.js' %}"></script>
+{% block js %}
+  {{ block.super }}
+  <script src="{% static 'bingo/js/board_list.js' %}"></script>
 {% endblock %}
 {% block headline %}{% trans "start page" %}{% endblock %}
 
-{% block extra_content_top %}
-{% include "bingo/profilelinks.html" %}
-{{ block.super }}
+{% block header %}
+  {{ block.super }}
+  {% include "bingo/profilelinks.html" %}
 {% endblock %}
 
 {% block content %}
 
+<div class="col-lg-8 offset-lg-2">
 {% if not my_board %}
-    {% if can_start_game %}
-        {% include "bingo/forms.html" %}
-    {% endif %}
+  {% if can_start_game %}
+      {% include "bingo/forms.html" %}
+  {% endif %}
 {% endif %}
+</div>
 
-{% if boards.count > 0 %}
-<ul class="game_list">
-    <li>
+<div class="row col-lg-8 offset-lg-2">
+  {% if boards.count > 0 %}
+  <div class="col-lg-6 px-4">
+    <h2>{% trans 'Current game' %}</h2>
+    <ul class="game_list">
+      <li>
         {% with current_game as game %}
-            <table class="current_game">
-                <tr>
-                    <th>{% trans 'Current game:' %}</th>
-                    <td><a href="{% url 'bingo-game' game_id=game.game_id %}">{% trans 'Game #' %}{{ game.game_id }}</a> ({{ game.created }})</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        {% if my_board %}
-                            {% with my_board as board %}
-                                <div class="thumbnail">
-                                    <div class="board_thumbnail_box" style="border-color: {{ board.color }}">
-                                        {% if show_board_created_date %}{{ board.created }}<br />{% endif %}
-                                        <a href="{% url 'bingo-bingo' board.board_id %}">
-                                            <img class="thumbnail" src="{% url 'bingo-thumbnail' board_id=board.board_id voted=True %}" alt="[Thumbnail: {% trans 'Board' %} #{{ board.board_id }}]" title="{{ board.created }}" />
-                                            <br />
-                                            {% trans 'Board' %} #{{ board.board_id }} ({{ board.get_middle_field.word.word }})
-                                        </a>
-                                        {% if board == my_board %}{% trans '(your board)' %}{% endif %}
-                                    </div>
-                                </div>
-                            {% endwith %}
-                        {% else %}
-                            {% trans 'You seem not to have a bingo board for the current game' %}
-                        {% endif %}
-                    </td>
-                </tr>
-                {% if game.description %}
-                    <tr>
-                        <th>{% trans 'Game Description:' %}</th>
-                        <td>{{ game.description }}</td>
-                    </tr>
-                {% endif %}
-            </table>
+          <h3 class="pt-2">
+            <a href="{% url 'bingo-game' game_id=game.game_id %}">{% trans 'Game #' %}{{ game.game_id }} {{ game.description }}</a>
+            <small class="date">{{ game.created|date:'Y-m-d H:i' }}</small>
+          </h3>
+          {% if not my_board %}
+              {% trans 'You seem not to have a bingo board for the current game' %}
+          {% endif %}
         {% endwith %}
         {% with all_boards=boards.all %}
         {% with boards=all_boards.all|slice:":12" total_boards=all_boards.count game=current_game %}
             {% include "bingo/board_list.html" %}
         {% endwith %}
         {% endwith %}
-    </li>
-</ul>
-{% endif %}
+      </li>
+    </ul>
+  </div>
+  {% endif %}
 
-{% if old_games.count > 0 %}
-<p class="gamelist_header">
-    {% trans 'View boards from older games:' %}
-</p>
-<ul class="game_list">
-    {% for game in old_games|slice:'0:10' %}
-    <li>
-        <a href="{% url 'bingo-game' game_id=game.game_id %}">{% trans 'Game #' %}{{ game.game_id }}</a> ({{ game.created }})
-        {% include "bingo/game_rating.html" %}
-        {% if game.description %}
-            <br />
-            ({{ game.description }})
-        {% endif %}
-        {% with all_boards=game.bingoboard_set.all %}
-        {% with boards=all_boards.all|slice:":12" total_boards=all_boards.count %}
+  {% if old_games.count > 0 %}
+  <div class="col-lg-6 px-4">
+    <h2>{% trans 'Past games' %}</h2>
+    <ul class="game_list">
+      {% for game in old_games|slice:'0:5' %}
+        <li>
+          <h3 class="pt-2">
+            <a href="{% url 'bingo-game' game_id=game.game_id %}">{% trans 'Game #' %}{{ game.game_id }} {{ game.description }}</a>
+            <small class="date">{{ game.created|date:'Y-m-d H:i' }}</small>
+          </h3>
+          {% with all_boards=game.bingoboard_set.all %}
+          {% with boards=all_boards.all|slice:":12" total_boards=all_boards.count %}
             {% include "bingo/board_list.html" %}
-        {% endwith %}
-        {% endwith %}
-    </li>
-    {% endfor %}
-    {% if old_games|length > 10 %}
-    <li><a href="{% url 'bingo-games_list' %}">{% trans 'older games' %}</a></li>
-    {% endif %}
-</ul>
-{% endif %}
-
+          {% endwith %}
+          {% endwith %}
+        </li>
+      {% endfor %}
+      {% if old_games|length > 5 %}
+        <li><a href="{% url 'bingo-games_list' %}">{% trans 'older games' %}</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

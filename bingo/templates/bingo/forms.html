@@ -1,26 +1,27 @@
 {% load i18n %}
-<div class="cf" style="padding: 0 0 2ex 0">
-<div class="create_form">
-    <fieldset class="create_form">
-    <legend class="form_header">{% trans 'create a new board:' %}</legend>
-    <form action="{% url 'bingo-create_board' %}" method="post">
-        <table class="create_form">
-        {{ create_form.as_table }}
-        {% csrf_token %}
-        </table>
-        <input type="submit" value="{% trans 'create board' %}" />
-    </form>
-    </fieldset>
-</div>
-
-<div class="reclaim_form">
-    <fieldset class="reclaim_form">
-    <legend class="form_header">{% trans 'reclaim your board:' %}</legend>
-    <form class="reclaim_form" action="{% url 'bingo-reclaim_board' %}" method="post">
-        {{ reclaim_form.as_p }}
-        {% csrf_token %}
-        <input type="submit" value="{% trans 'go to my board' %}" />
-    </form>
-    </fieldset>
-</div>
+<div class="row mb-5">
+  <div class="col-md-6 col-sm-12">
+    <div class="card bg-{{ user_theme|lower }}">
+      <fieldset>
+        <legend class=" card-header">{% trans 'Create a new board' %}</legend>
+        <form action="{% url 'bingo-create_board' %}" method="post" class="card-body">
+          {{ create_form.as_p }}
+          {% csrf_token %}
+          <input type="submit" value="{% trans 'Create board' %}" class="btn btn-primary"/>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <div class="card bg-{{ user_theme|lower }}">
+      <fieldset>
+        <legend class=" card-header">{% trans 'Reclaim your board' %}</legend>
+        <form action="{% url 'bingo-reclaim_board' %}" method="post" class="card-body form-inline">
+          {{ reclaim_form.as_p }}
+          {% csrf_token %}
+          <input type="submit" value="{% trans 'Go to my board' %}" class="btn btn-primary"/>
+        </form>
+      </fieldset>
+    </div>
+  </div>
 </div>

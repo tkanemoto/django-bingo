@@ -1,12 +1,14 @@
 {% load i18n %}
-<div class="cf">
-<form action="{% url 'bingo-change_theme' %}" method="POST" id="theme_chooser">
-    {% trans "Theme:" %} <select name="theme">
-    {% for theme in themes %}
-    <option value="{{ theme.1 }}" {% if theme.1 == user_theme %}selected{% endif %}>{{ theme.0 }}</option>
-    {% endfor %}
-</select>
-{% csrf_token %}
-<input type="submit" value="{% trans 'change' %}" />
+
+<form action="{% url 'bingo-change_theme' %}?next={{ request.path }}" method="POST" class="form-inline">
+  <div class="form-group">
+    <label class="mr-3">{% trans "Theme:" %}</label>
+    <select name="theme" class="form-control mr-3">
+      {% for theme in themes %}
+        <option value="{{ theme }}" {% if theme == user_theme %}selected{% endif %}>{{ theme }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% csrf_token %}
+  <input type="submit" value="{% trans 'Change' %}" class="btn btn-primary mr-4"/>
 </form>
-</div>

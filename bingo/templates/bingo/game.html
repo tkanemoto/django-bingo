@@ -2,56 +2,64 @@
 {% load i18n %}
 {% load staticfiles %}
 {% block title %}{% trans 'Game #' %}{{ game.game_id }}{% endblock %}
+
+{% block js %}
+  {{ block.super }}
+  <script src="{% static 'bingo/js/board_list.js' %}"></script>
+{% endblock %}
+
 {% block extra_head %}
-    {{ block.super }}
-    <script src="{% static 'bingo/js/board_list.js' %}"></script>
-{% block twittercard %}
+  {{ block.super }}
+  {% block twittercard %}
     {% if twittercard_account %}
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="{{ twittercard_account }}" />
-        <meta name="twitter:title" content="{% spaceless %}
-            {% block twittercard_title %}
-                {% blocktrans with game_id=game.game_id %}Bingo Game #{{ game_id }}{% endblocktrans %}
-            {% endblock %}
-        {% endspaceless %}" />
-        <meta name="twitter:description" content="{% spaceless %}
-            {% if board.game.description %}
-                {% block twittercard_description_with_topic %}
-                    {% blocktrans with game_id=game.game_id date=game.created|date:"SHORT_DATE_FORMAT" description=board.game.description %}Game #{{ game_id }} (Topic: {{ description }}) from {{ date }}.{% endblocktrans %}
-                {% endblock %}
-            {% else %}
-                {% block twittercard_description %}
-                    {% blocktrans with game_id=game.game_id date=game.created|date:"SHORT_DATE_FORMAT" %}Game #{{ game_id }} from {{ date }}.{% endblocktrans %}
-                {% endblock %}
-            {% endif %}
-        {% endspaceless %}" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="{{ twittercard_account }}" />
+      <meta name="twitter:title" content="{% spaceless %}
+        {% block twittercard_title %}
+          {% blocktrans with game_id=game.game_id %}Bingo Game #{{ game_id }}{% endblocktrans %}
+        {% endblock %}
+      {% endspaceless %}" />
+      <meta name="twitter:description" content="{% spaceless %}
+        {% if board.game.description %}
+          {% block twittercard_description_with_topic %}
+            {% blocktrans with game_id=game.game_id date=game.created|date:"SHORT_DATE_FORMAT" description=board.game.description %}Game #{{ game_id }} (Topic: {{ description }}) from {{ date }}.{% endblocktrans %}
+          {% endblock %}
+        {% else %}
+          {% block twittercard_description %}
+            {% blocktrans with game_id=game.game_id date=game.created|date:"SHORT_DATE_FORMAT" %}Game #{{ game_id }} from {{ date }}.{% endblocktrans %}
+          {% endblock %}
+        {% endif %}
+      {% endspaceless %}" />
     {% endif %}
-    {% endblock %}
+  {% endblock %}
 {% endblock %}
 {% block headline %}{% trans 'Game #' %}{{ game.game_id }}{% endblock %}
-{% block extra_content_top %}
-{% include "bingo/profilelinks.html" %}
-{{ block.super }}
+{% block header %}
+  {{ block.super }}
+  {% include "bingo/profilelinks.html" %}
 {% endblock %}
 {% block content %}
-{% with game.bingoboard_set.all as boards %}
-<div class="cf"></div>
+  {% with game.bingoboard_set.all as boards %}
 
-{% if not my_board and not game.is_expired %}
+  <div class="col-lg-8 offset-lg-2">
+  {% if not my_board and not game.is_expired %}
     {% include "bingo/forms.html" %}
-{% endif %}
+  {% endif %}
+  </div>
 
-{% include "bingo/board_list.html" %}
-{% endwith %}
-<div style="text-align: center">
-<div style="width: 60em;text-align: center;margin: 0 auto;">
-    {% for wordvote in game.words_with_votes %}
-    {% if wordvote.percent > 50 %}
-        <span style="padding: 1ex;font-size: {{ wordvote.percent|add:40|stringformat:"f"}}%{% if wordvote.percent > 80 %};font-weight: bold{% endif %}">
-        {{ wordvote.word }}({{ wordvote.votes }})
-        </span>
-    {% endif %}
-    {% endfor %}
-</div>
-</div>
+  <div class="col-md-6 offset-md-3">{% include "bingo/board_list.html" %}</div>
+
+  {% endwith %}
+
+  <div style="text-align: center">
+    <div style="width: 60em;text-align: center;margin: 0 auto;">
+      {% for wordvote in game.words_with_votes %}
+        {% if wordvote.percent > 50 %}
+          <span style="padding: 1ex;font-size: {{ wordvote.percent|add:40|stringformat:"f"}}%{% if wordvote.percent > 80 %};font-weight: bold{% endif %}">
+            {{ wordvote.word }}({{ wordvote.votes }})
+          </span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

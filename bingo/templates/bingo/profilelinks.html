@@ -1,9 +1,9 @@
 {% load i18n %}
-<div style="margin-bottom: 1em;float: right" class="cf">
+<div class="navbar-text my-2 my-lg-0">
 {% if user.is_authenticated %}
     <b>{% trans "logged in as:" %}</b>
     <a href="{% url "bingo-profile" username=user.username %}">{{ user.username }}</a>
-    <br />
+    /
     <a href="{% url "auth_logout" %}?next={% url "bingo-main" %}">{% trans "logout" %}</a>
 {% else %}
     <a href="{% url "auth_login" %}?next={% url "bingo-main" %}">{% trans "login" %}</a>

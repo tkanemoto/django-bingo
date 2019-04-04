@@ -1,14 +1,8 @@
 body{
-    background: url("dark/background.png") #000020 fixed;
+    background: #000000;
     color: white;
 }
-a {
-    color: lightblue;
-}
-li.word, td.bingofield {
-    border: none;
-    color: black;
-}
+
 input, select {
     background-color: #001000;
     color: white;

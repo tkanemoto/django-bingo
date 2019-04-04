@@ -34,8 +34,10 @@ class CreateForm(forms.Form):
         # when there is no active game.
         if not GAME_DESCRIPTION_DISABLED and game is None:
             self.fields['description'] = forms.CharField(
-                label=_(u'Game Description (optional)'),
+                label=_(u'Game description (optional)'),
                 required=False)
+            self.fields['description'].widget.attrs['placeholder'] = 'Game description (optional)'
+        self.fields['password'].widget.attrs['placeholder'] = 'Password (optional)'
 
     def clean_password(self):
         if self.cleaned_data['password']:
@@ -80,6 +82,7 @@ class ReclaimForm(forms.Form):
     def __init__(self, data=None, game=None, *args, **kwargs):
         self.game = game
         super(ReclaimForm, self).__init__(data=data, *args, **kwargs)
+        self.fields['password'].widget.attrs['placeholder'] = 'Password (optional)'
 
     def clean_password(self):
         hasher = get_hasher(algorithm='pbkdf2_sha256')

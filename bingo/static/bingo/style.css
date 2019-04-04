@@ -3,7 +3,6 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    background: url("background.png") fixed;
     color: black;
 }
 #wrap {
@@ -19,10 +18,7 @@ div.footer {
 div.footer small {
     padding: 0 0.5em;
 }
-a {
-    text-decoration: none;
-    color: blue;
-}
+
 div.header a {
     color: white;
     text-decoration: none;
@@ -32,7 +28,7 @@ div.content {
 }
 .header {
     margin-bottom: 1ex;
-    background-color: darkgreen;
+    background-color: #28518C;
     color: white;
     white-space:nowrap;
     overflow:hidden;
@@ -41,32 +37,69 @@ div.content {
     margin: 0;
     padding: 0.5ex;
 }
+
+#bingoboard > div > table.bingoboard,
+#bingoboard > div > ul.words {
+    margin: 0 auto;
+}
+table.bingoboard {
+    table-layout: fixed;
+    width: auto;
+}
+td.bingofield {
+    width: 10rem;
+    height: 10rem;
+    position: relative;
+}
+td.bingofield.active {
+    color: white;
+}
 td.bingofield, li.word {
     background-color: white;
-    vertical-align: top;
+    vertical-align: middle;
     border: thin solid black;
     text-align: right;
+    color: black;
 }
 li.word.veto, td.bingofield.veto {
     color: red;
 }
 td.bingofield.middle {
-    background-color: #999;
+    background-color: #444;
     color: white;
 }
+
 td.bingofield div.bingofield {
-    padding: 2em;
     text-align: center;
 }
+
+td.bingofield span.votes {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    font-size: .8rem;
+}
+
 .clickable {
     cursor: pointer;
 }
 .veto {
     color: red;
 }
+td.bingofield form.voteform,
 ul.words li.word form.voteform {
-    display: inline;
-    float: right;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+ul.words li.word form.voteform {
+    right: 40px;
+}
+ul.words span.votes {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: .8rem;
 }
 ul.words {
     padding: 0;
@@ -76,6 +109,7 @@ li.word{
     float: left;
     width: 24em;
     margin: 1px;
+    position: relative;
 }
 li.word div.word {
     float: left;
@@ -94,7 +128,7 @@ span.form_header {
     font-weight: bold;
 }
 fieldset.reclaim_form, fieldset.create_form {
-    border: 2px solid darkgreen;
+    border: 2px solid #28518C;
     display: table;
     padding: 1ex;
 }
@@ -118,13 +152,25 @@ ul.errorlist {
     color: white;
 }
 #num_users_table {
+    font-size: .9rem;
     float: right;
+    margin: 8px;
 }
 #num_users_table th {
     text-align: right;
 }
 #num_users_table td {
     text-align: left;
+}
+
+.game_list h3 {
+    border-top: 1px solid rgba(122,122,122,.2);
+}
+.game_list small.date {
+    float: right;
+    font-size: 1.2rem;
+    color: rgba(122,122,122,.8);
+    line-height: 2.5rem;
 }
 
 table.current_game th {
@@ -141,6 +187,7 @@ ul.board_list {
 ul.board_list li.thumbnail {
     float: left;
 }
+
 div.board_thumbnail_box {
     display: inline-block;
     margin-right: 0.6ex;

@@ -1,14 +1,7 @@
 body{
-    background: url("../background.png") fixed;
-    color: black;
+    color: #222;
 }
-a {
-    color: blue;
-}
-li.word, td.bingofield {
-    border: thin solid black;
-    color: black;
-}
+
 input, select {
     background-color: lightgrey;
     color: black;
