@@ -8,7 +8,7 @@
   {{ block.super }}
   <script src="{% static 'bingo/js/board_list.js' %}"></script>
 {% endblock %}
-{% block headline %}{% trans "start page" %}{% endblock %}
+{% block headline %}{% trans "Home" %}{% endblock %}
 
 {% block header %}
   {{ block.super }}
@@ -68,7 +68,7 @@
         </li>
       {% endfor %}
       {% if old_games|length > 5 %}
-        <li><a href="{% url 'bingo-games_list' %}">{% trans 'older games' %}</a></li>
+        <li><a href="{% url 'bingo-games_list' %}">{% trans 'More past games' %}</a></li>
       {% endif %}
     </ul>
   </div>

@@ -151,9 +151,8 @@ ul.errorlist {
     background-color: red;
     color: white;
 }
-#num_users_table {
+.navbar .list-inline {
     font-size: .9rem;
-    float: right;
     margin: 8px;
 }
 #num_users_table th {

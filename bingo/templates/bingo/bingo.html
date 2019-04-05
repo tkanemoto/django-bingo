@@ -1,6 +1,7 @@
 {% extends 'bingo/base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load humanize %}
 {% block title %}{% trans "Board" %} #{{ board.board_id }}{% endblock %}
 {% block extra_style %}
     {{ block.super }}
@@ -59,24 +60,29 @@ var middleword = "{{ middle_field.word.word|lower }}";
 {% endblock %}
 
 {% block header %}
+  <ul class="list-inline">
+    <li class="list-inline-item"><span class="text-secondary">IP:</span> {{ board.ip }}</li>
+    <li class="list-inline-item"><span class="text-secondary">Created:</span> {{ board.created|naturaltime }}</li>
+    <!--<li class="list-inline-item"><span class="text-secondary">Last used:</span> {{ board.last_used|naturaltime }}</li>-->
+  </ul>
   <ul id="num_users_table" class="list-inline">
     {% if board.game.is_expired %}
       <li class="list-inline-item">
-        <b>{% trans 'Created:' %}</b>
+        <span class="text-secondary">{% trans 'Created:' %}</span>
         <span id="created">{{ board.created|date:"SHORT_DATETIME_FORMAT" }}</span>
       </li>
       <li class="list-inline-item">
-        <b>{% trans 'Last Used:' %}</b>
+        <span class="text-secondary">{% trans 'Last Used:' %}</span>
         <span id="last_used">{{ board.last_used|date:"SHORT_DATETIME_FORMAT" }}</span>
       </li>
     {% endif %}
     <li class="list-inline-item">
-      <b>{% trans 'Total Users:' %}</b>
+      <span class="text-secondary">{% trans 'Total Users:' %}</span>
       <span id="num_users">{{ board.game.num_users }}</span>
     </li>
     {% if not board.game.is_expired %}
       <li class="list-inline-item">
-        <b>{% trans 'Active Users:' %}</b>
+        <span class="text-secondary">{% trans 'Active Users:' %}</span>
         <span id="num_active_users">{{ board.game.num_active_users }}</span>
       </li>
     {% endif %}
