@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n humanize %}
 
 <ul class="list-unstyled">
     {% if my_board %}{% with board=my_board %}
@@ -12,8 +12,12 @@
                 <h4 class="mt-0">
                     <a href="{% url 'bingo-bingo' board.board_id %}">{% trans 'Board' %} #{{ board.board_id }}</a>
                 </h4>
-                <small class="badge badge-success">{% trans 'Your board' %}</small>
-                {{ board.get_middle_field.word.word }}
+                <ul class="list-inline">
+                    <li class="list-inline-item"><span class="text-secondary">IP:</span> {{ board.ip }}</li>
+                    <li class="list-inline-item"><span class="text-secondary">Created:</span> {{ board.created|naturaltime }}</li>
+                    <!--<li class="list-inline-item"><span class="text-secondary">Last used:</span> {{ board.last_used|naturaltime }}</li>-->
+                </ul>
+                <small class="badge badge-success">{% trans 'Your current board' %}</small>
             </div>
         </li>
     {% endwith %}{% endif %}
@@ -27,7 +31,11 @@
             </div>
             <div class="media-body">
                 <h4 class="mt-0"><a href="{% url 'bingo-bingo' board.board_id %}">{% trans 'Board' %} #{{ board.board_id }}</a></h4>
-                {{ board.get_middle_field.word.word }}
+                <ul class="list-inline">
+                    <li class="list-inline-item"><span class="text-secondary">IP:</span> {{ board.ip }}</li>
+                    <li class="list-inline-item"><span class="text-secondary">Created:</span> {{ board.created|naturaltime }}</li>
+                    <!--<li class="list-inline-item"><span class="text-secondary">Last used:</span> {{ board.last_used|naturaltime }}</li>-->
+                </ul>
             </div>
         </li>
         {% endif %}

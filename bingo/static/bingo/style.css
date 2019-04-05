@@ -168,7 +168,7 @@ ul.errorlist {
 }
 .game_list small.date {
     float: right;
-    font-size: 1.2rem;
+    font-size: .9rem;
     color: rgba(122,122,122,.8);
     line-height: 2.5rem;
 }
